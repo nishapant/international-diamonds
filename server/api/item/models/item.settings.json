@@ -1,0 +1,141 @@
+{
+  "kind": "collectionType",
+  "collectionName": "items",
+  "info": {
+    "name": "Item"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "bridal_set",
+        "halo_style",
+        "three_stone_ring",
+        "trio_sets",
+        "solitaire_rings",
+        "gemstone_bridal",
+        "anniversary_bands",
+        "fashion_rings",
+        "promise_rings",
+        "claddagh_rings",
+        "gemstone_rings",
+        "infinity_rings",
+        "heart_rings",
+        "family_and_mother_rings",
+        "personalized_rings",
+        "cocktail_rings",
+        "men_bands",
+        "ladies_diamond_bands",
+        "enhancers_bands",
+        "wraps",
+        "eternity_bands",
+        "chains",
+        "religious_necklaces",
+        "hearts_necklaces",
+        "infinity_necklaces",
+        "lockets_necklaces",
+        "initial_necklaces",
+        "name_necklaces",
+        "personalized_necklaces",
+        "diamond_fashion_pendants",
+        "diamond_studs",
+        "hoops",
+        "dangling_earrings",
+        "solitaire_studs",
+        "gemstone_studs",
+        "children_earrings",
+        "cubic_zirconia_studs",
+        "cubic_zirconia_hoops",
+        "diamond_bangles",
+        "tennis_bracelets",
+        "gold_bangles",
+        "charm_bracelets",
+        "gold_bracelets",
+        "men_gold_bracelets",
+        "gemstone_bracelets",
+        "children_bracelets",
+        "silver_bracelets",
+        "men_watches",
+        "ladies_watches",
+        "tungsten_metal_jewelry",
+        "stainless_steel_metal_jewelry",
+        "clearance",
+        "create_your_own"
+      ],
+      "required": true
+    },
+    "size": {
+      "type": "decimal"
+    },
+    "in_store": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "online": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "metal": {
+      "type": "string",
+      "required": true
+    },
+    "clearance": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "regular_price": {
+      "type": "decimal",
+      "required": true
+    },
+    "sale_price": {
+      "type": "decimal"
+    },
+    "center_stone": {
+      "type": "string"
+    },
+    "side_stone": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "stone_weight": {
+      "type": "string",
+      "required": true
+    },
+    "color_clarity": {
+      "type": "string",
+      "required": true
+    },
+    "customization": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files",
+        "images",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": true
+    }
+  }
+}
