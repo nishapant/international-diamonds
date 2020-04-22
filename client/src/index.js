@@ -1,25 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import App from './components/App';
-import Checkout from './components/Checkout';
-import Navbar from './components/Navbar';
 import * as serviceWorker from './serviceWorker';
-import 'antd/dist/antd.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import './style/Navbar.css';
 
 
 
 const Root = () =>  (
-    <Router>
-        <React.Fragment>
-            <Navbar />
-            <Switch>
-                <Route component={App} exact path="/" />
-                <Route component={Checkout} path="/checkout" />
-                {/* <Route component={Brews} path="/:brandId" /> */}
-            </Switch>
-        </React.Fragment>
-    </Router>
+  <Router>
+      <React.Fragment>
+          <Navbar />
+          <Switch>
+              <Route component={App} exact path="/" />
+              {/* <Route component={Checkout} path="/checkout" />
+              <Route component={Contact} path="/contact" /> 
+               <Route component={Brews} path="/:brandId" /> */}
+          </Switch>
+      </React.Fragment>
+  </Router>
 )
 
 ReactDOM.render(<Root />, document.getElementById('root'));
