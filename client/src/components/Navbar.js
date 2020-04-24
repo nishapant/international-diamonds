@@ -36,7 +36,7 @@ class Navbar extends Component {
                     <div className="menuItems">
                         <MenuItems />
                     </div>
-                    <Button className="barsMenu" type="secondary" onClick={this.showDrawer} style={{ marginBottom: '8px' }}>
+                    <Button className="barsMenu" type="secondary" onClick={this.showDrawer} style={{ marginBottom: '10px', marginLeft:'20px' }}>
                         <MenuOutlined style={{ fontSize: '16px', color: '#686868' }} />
                     </Button>
                     <div className="searchMenuMobile">   
@@ -56,7 +56,7 @@ class Navbar extends Component {
                         <Menu mode="vertical">
                             <SubMenu title={<span>ENGAGMENT</span>}>
                                 <MenuItemGroup style={{ marginTop: '-15px' }}>
-                                        <Menu.Item key="setting:1">Bridal Set</Menu.Item>
+                                        <Menu.Item className="colorChange" key="setting:1">Bridal Set</Menu.Item>
                                         <Menu.Item key="setting:2">Halo Set</Menu.Item>
                                         <Menu.Item key="setting:3">Three Stone Ring</Menu.Item>
                                         <Menu.Item key="setting:4">Trio Sets</Menu.Item>

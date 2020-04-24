@@ -92,6 +92,11 @@
   text-decoration: none;
 }
 
+.no-hover-item:hover {
+  color: black !important;
+  text-decoration: none;
+}
+
 .no-hover:active {
   border-bottom: 2px solid transparent !important;
   color: black !important;
@@ -149,4 +154,14 @@
   .logo a{
     padding: 10px 20px;
   }
+}
+
+/* .ant-menu-submenu-title:hover {
+  color: red!important;
+} */
+
+.ant-menu-submenu .ant-submenu-item-selected.colorChange {
+  background-color: red !important; /*Overriden property*/
+  color: red !important;
+
 }

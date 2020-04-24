@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.top-row-footer {
+  margin-bottom: 60px;
+}
+
+.footer-div {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  outline: solid blue 1px;
+}

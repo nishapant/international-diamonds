@@ -12,7 +12,7 @@ class LeftMenu extends Component {
             <Menu mode="horizontal" class="inline">
                 <SubMenu title={<span>ENGAGMENT</span>} className="no-hover">
                     <MenuItemGroup style={{ marginTop: '-15px' }}>
-                            <Menu.Item key="setting:1">Bridal Set</Menu.Item>
+                            <Menu.Item key="setting:1" class="no-hover-item">Bridal Set</Menu.Item>
                             <Menu.Item key="setting:2">Halo Set</Menu.Item>
                             <Menu.Item key="setting:3">Three Stone Ring</Menu.Item>
                             <Menu.Item key="setting:4">Trio Sets</Menu.Item>
