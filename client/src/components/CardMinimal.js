@@ -1,5 +1,4 @@
 import React from 'react';
-import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
 import '../style/2-Card-Detailed.css';
 import Strapi from 'strapi-sdk-javascript/build/main';
@@ -94,6 +93,7 @@ const ErrorMessage = ({children}) => (
 
 class CheckoutForm extends React.Component {
   state = {
+    clientSecret: '',
     cartItems: [],
     email: '',
     name: '',
@@ -111,11 +111,25 @@ class CheckoutForm extends React.Component {
   }
   componentDidMount() {
     this.setState({ cartItems: getCart()});
+    window
+      .fetch("/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
+      })
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        this.setState({ clientSecret: data.clientSecret});
+      });
   }
 
   handleSubmit = async event => {
     event.preventDefault();
-    const { cartItems, email, name, phone, city, country, line1, postal_code, state, error, cardComplete, processing, paymentMethod } = this.state;
+    const { cartItems, email, name, phone, city, country, line1, postal_code, state, error, cardComplete, processing, paymentMethod, clientSecret } = this.state;
     const amount = calculateAmount(cartItems);
 
     const { stripe, elements } = this.props;
@@ -134,26 +148,28 @@ class CheckoutForm extends React.Component {
 
     }
 
-    
-
-
-    // let token;
-    // let id;
+    let token;
     try {
-        // const cardElement = elements.getElement(CardElement);
-        // id = cardElement.id;
-        const response = await stripe.createToken(cardElement);
-        token = response.token.id;
-        // const payload = await stripe.createPaymentMethod({
-        // type: 'card',
-        // card: elements.getElement(CardElement),
-        // billing_details: {
-        //   name: billingDetails.name,
-        //   email: billingDetails.email,
-        //   phone: billingDetails.phone,
-        //   address: address,
-        // },
-        // });
+        const cardElement = elements.getElement(CardElement);
+
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: {
+              name: name,
+              email: email,
+              phone: phone,
+              address: {
+                city: city,
+                country: country,
+                line1: line1,
+                postal_code: postal_code,
+                state: state
+              },
+            }
+          }
+        });
+      
         await strapi.createEntry('orders', {
           items: cartItems,
           email: email,
@@ -165,7 +181,7 @@ class CheckoutForm extends React.Component {
           city: city,
           address: line1,
           name: name,
-          token
+          token,
         });
         this.setState({ processing: false });
         clearCart();
@@ -177,11 +193,6 @@ class CheckoutForm extends React.Component {
       console.log(err);
     }
 
-    // if (payload.error) {
-    //   setError(payload.error);
-    // } else {
-    //   setPaymentMethod(payload.paymentMethod);
-    // }
   };
 
   render() {
