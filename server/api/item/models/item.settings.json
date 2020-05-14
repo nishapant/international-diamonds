@@ -2,7 +2,7 @@
   "kind": "collectionType",
   "collectionName": "items",
   "info": {
-    "name": "Item"
+    "name": "item"
   },
   "options": {
     "increments": true,
@@ -17,7 +17,7 @@
       "type": "text",
       "required": true
     },
-    "category": {
+    "subcategory": {
       "type": "enumeration",
       "enum": [
         "bridal_set",
@@ -135,6 +135,23 @@
         "videos"
       ],
       "plugin": "upload",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "engagement",
+        "rings",
+        "wedding_bands",
+        "necklaces",
+        "earrings",
+        "bracelets",
+        "watches"
+      ],
+      "required": true
+    },
+    "is_ring": {
+      "type": "boolean",
       "required": true
     }
   }
