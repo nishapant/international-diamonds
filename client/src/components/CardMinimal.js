@@ -172,18 +172,18 @@ const CheckoutForm = () => {
         //   address: address,
         // },
         // });
-        //   await strapi.createEntry('orders', {
-        //     items: cartItems,
-        //     email: billingDetails.email,
-        //     amount: amount,
-        //     phoneNumber: billingDetails.phone,
-        //     country: address.country,
-        //     postalCode: address.postal_code,
-        //     state: address.state,
-        //     city: address.city,
-        //     address: address.line1,
-        //     name: billingDetails.name,
-        // });
+        await strapi.createEntry('orders', {
+          items: cartItems,
+          email: billingDetails.email,
+          amount: amount,
+          phoneNumber: billingDetails.phone,
+          country: address.country,
+          postalCode: address.postal_code,
+          state: address.state,
+          city: address.city,
+          address: address.line1,
+          name: billingDetails.name,
+        });
         setProcessing(false);
         clearCart();
         console.log('Your order has been successfully submitted!');
