@@ -5,7 +5,7 @@ import { Carousel } from 'antd';
 class Slideshow extends Component {
   render() {
     return (
-        <Carousel autoplay>
+        <Carousel autoplay className="slideshow">
             <div>
             <h3>1</h3>
             </div>

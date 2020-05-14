@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.categoryDescription {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+}
+
+@media(max-width: 1370px){
+    .headingInfo {
+        display: none;
+    }
+    .mobileHeadingInfo {
+        display: block;
+    }
+}
+  
+@media(min-width: 1371px){
+    .mobileHeadingInfo {
+        display: none;
+    }
+}
