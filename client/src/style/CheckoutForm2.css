@@ -22,6 +22,8 @@
   
   .Form {
     animation: fade 200ms ease-out;
+    width: 50%;
+    margin: 0 auto;
   }
   
   .FormGroup {
@@ -185,3 +187,38 @@
     cursor: pointer;
     background: transparent;
   }
+
+  .container-payments {
+    display: flex; 
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .whiteBackground {
+    width: 90%;
+    margin: 40px auto;
+    background-color: white;
+    padding: 40px;
+  }
+
+  @media(max-width: 1040px){
+    .container-payments {
+      display: block; 
+    }
+
+    .Form {
+      width:100%;
+      margin: 0;
+    }
+
+    .FormGroup {
+      margin: 0 10px 10px;
+    }
+    
+    .whiteBackground {
+      width: 100%;
+      margin: 40px auto;
+      padding: 40px 0;
+    }
+  }
+  
