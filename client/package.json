@@ -21,6 +21,7 @@
     "strapi-sdk-javascript": "^0.3.3",
     "stripe": "^8.51.0"
   },
+  "homepage": "http://localhost:3000/",
   "proxy": "http://localhost:4242",
   "scripts": {
     "start": "react-app-rewired start",

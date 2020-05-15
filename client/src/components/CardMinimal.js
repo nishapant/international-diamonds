@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
 import '../style/2-Card-Detailed.css';
 import Strapi from 'strapi-sdk-javascript/build/main';
@@ -94,7 +94,6 @@ const ErrorMessage = ({children}) => (
 
 class CheckoutForm extends React.Component {
   state = {
-    clientSecret: '',
     cartItems: [],
     email: '',
     name: '',
@@ -112,28 +111,29 @@ class CheckoutForm extends React.Component {
   }
   async componentDidMount() {
     this.setState({ cartItems: getCart()});
-    window
-      .fetch("/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: getCart()
-      })
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        this.setState({ clientSecret: data.clientSecret });
-      });
+    // window
+    //   .fetch("/create-payment-intent", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
+    //   })
+    //   .then(res => {
+    //     return res.json();
+    //   })
+    //   .then(data => {
+    //     console.log(data.clientSecret);
+    //   });
   }
 
   handleSubmit = async event => {
     event.preventDefault();
-    const { cartItems, email, name, phone, city, country, line1, postal_code, state, error, cardComplete, processing, paymentMethod, clientSecret } = this.state;
+    const { cartItems, email, name, phone, city, country, line1, postal_code, state, error, cardComplete, processing, paymentMethod } = this.state;
     const amount = calculateAmount(cartItems);
 
-    const { stripe, elements } = this.props;
+    const { stripe, elements, clientSecret } = this.props;
+    console.log(clientSecret);
 
     if (!stripe || !elements) {
       return;
@@ -168,6 +168,12 @@ class CheckoutForm extends React.Component {
             }
           }
         });
+
+        if(payload.error) {
+          this.setState({ processing: false });
+          this.setState({ error: payload.error });
+          return;
+        }
       
         await strapi.createEntry('orders', {
           items: cartItems,
@@ -331,10 +337,31 @@ const ELEMENTS_OPTIONS = {
 };
 
 export default function InjectedCheckoutForm() {
+  const [clientSecret, setClientSecret] = useState('');
+
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    window
+      .fetch("/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
+      })
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        console.log(data.clientSecret)
+        setClientSecret(data.clientSecret);
+      });
+  }, []);
+
   return (
     <ElementsConsumer>
       {({ stripe, elements }) => (
-        <CheckoutForm stripe={stripe} elements={elements} />
+        <CheckoutForm stripe={stripe} elements={elements} clientSecret={clientSecret} />
       )}
     </ElementsConsumer>
   );
