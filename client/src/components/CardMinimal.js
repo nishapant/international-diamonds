@@ -7,6 +7,7 @@ import { getCart, calculatePrice, clearCart, calculateAmount } from '../utils';
 const apiUrl = process.env.API_URL || 'http://localhost:1337/';
 const strapi = new Strapi(apiUrl);
 
+
 const CARD_OPTIONS = {
   iconStyle: 'solid',
   style: {
@@ -109,7 +110,7 @@ class CheckoutForm extends React.Component {
     paymentMethod: null,
 
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ cartItems: getCart()});
     window
       .fetch("/create-payment-intent", {
@@ -117,13 +118,13 @@ class CheckoutForm extends React.Component {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
+        body: getCart()
       })
       .then(res => {
         return res.json();
       })
       .then(data => {
-        this.setState({ clientSecret: data.clientSecret});
+        this.setState({ clientSecret: data.clientSecret });
       });
   }
 
@@ -150,8 +151,6 @@ class CheckoutForm extends React.Component {
 
     let token;
     try {
-        const cardElement = elements.getElement(CardElement);
-
         const payload = await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
             card: elements.getElement(CardElement),
@@ -181,12 +180,11 @@ class CheckoutForm extends React.Component {
           city: city,
           address: line1,
           name: name,
-          token,
         });
         this.setState({ processing: false });
         clearCart();
         console.log('Your order has been successfully submitted!');
-        // console.log(payload);
+        console.log(payload);
     } catch (err) {
       this.setState({ processing: false });
       this.setState({ error: err });
