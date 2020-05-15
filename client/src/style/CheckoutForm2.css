@@ -8,11 +8,6 @@
     border-style: none;
   }
   
-  .AppWrapper {
-    width: 500px;
-    height: 400px;
-    position: relative;
-  }
   
   @keyframes fade {
     from {
@@ -33,11 +28,10 @@
     margin: 0 15px 20px;
     padding: 0;
     border-style: none;
-    background-color: #7795f8;
+    background-color:white;
     will-change: opacity, transform;
-    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #829fff;
-    border-radius: 4px;
+    border: 1px solid grey;
+
   }
   
   .FormRow {
@@ -46,7 +40,6 @@
     -ms-flex-align: center;
     align-items: center;
     margin-left: 15px;
-    border-top: 1px solid #819efc;
   }
   
   .FormRow:first-child {
@@ -55,9 +48,12 @@
   
   .FormRowLabel {
     width: 15%;
+    font-size: 11px;
+    font-weight: bolder;
+    letter-spacing: 1px;
     min-width: 100px;
     padding: 11px 0;
-    color: #c4f0ff;
+    color: black;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -70,7 +66,7 @@
     }
   }
   .FormRowInput:-webkit-autofill {
-    -webkit-text-fill-color: #fce883;
+    -webkit-text-fill-color: black;
     /* Hack to hide the default webkit autofill */
     transition: background-color 100000000s;
     animation: 1ms void-animation-out;
@@ -80,13 +76,13 @@
     font-size: 16px;
     width: 100%;
     padding: 11px 15px 11px 0;
-    color: #fff;
+    color: grey;
     background-color: transparent;
     animation: 1ms void-animation-out;
   }
   
   .FormRowInput::placeholder {
-    color: #87bbfd;
+    color: lightgrey;
   }
   
   .StripeElement--webkit-autofill {
@@ -100,26 +96,23 @@
   
   .SubmitButton {
     display: block;
-    font-size: 16px;
+    letter-spacing: 1px;
+    font-size: 15px;
     width: calc(100% - 30px);
     height: 40px;
     margin: 40px 15px 0;
     background-color: #000000;
-    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #000000;
-    border-radius: 4px;
     color: #fff;
     font-weight: 600;
     cursor: pointer;
     transition: all 100ms ease-in-out;
     will-change: transform, background-color, box-shadow;
+    border: 1px solid black;
   }
 
   .SubmitButton:hover {
     background-color: white;
     color: black;
-    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 white;
   }
   
   .SubmitButton:active {

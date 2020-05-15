@@ -173,21 +173,7 @@ class CheckoutForm extends Component {
                                 </Form.Item>
                             </Form>
                         </div>
-                    
-                    <form 
-                        style={{
-                            display: 'inlineBlock',
-                            textAlign: 'center',
-                            maxWidth: 450
-                        }}
-                        onSubmit={this.handleConfirmOrder}
-                    >
-    
-                        
-                        <CardElement id="stripe__input" onReady={input => input.focus()} />
-
-                        <button id="stripe__button" type="submit">Submit</button>
-                    </form>
+            
                     
                     </React.Fragment> : (
                         <div>

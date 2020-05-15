@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Typography, Input, Modal, Button, Spin } from 'antd';
+import { LineOutlined, CloseCircleOutlined, LockOutlined } from '@ant-design/icons';
 import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
-import '../style/2-Card-Detailed.css';
+import '../style/CheckoutForm2.css';
 import Strapi from 'strapi-sdk-javascript/build/main';
 import { getCart, calculatePrice, clearCart, calculateAmount } from '../utils';
 
@@ -12,8 +14,8 @@ const CARD_OPTIONS = {
   iconStyle: 'solid',
   style: {
     base: {
-      iconColor: '#c4f0ff',
-      color: '#fff',
+      iconColor: 'black',
+      color: 'grey',
       fontWeight: 500,
       fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
       fontSize: '16px',
@@ -22,7 +24,7 @@ const CARD_OPTIONS = {
         color: '#fce883',
       },
       '::placeholder': {
-        color: '#87bbfd',
+        color: 'lightgrey',
       },
     },
     invalid: {
@@ -111,20 +113,6 @@ class CheckoutForm extends React.Component {
   }
   async componentDidMount() {
     this.setState({ cartItems: getCart()});
-    // window
-    //   .fetch("/create-payment-intent", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
-    //   })
-    //   .then(res => {
-    //     return res.json();
-    //   })
-    //   .then(data => {
-    //     console.log(data.clientSecret);
-    //   });
   }
 
   handleSubmit = async event => {
@@ -149,7 +137,6 @@ class CheckoutForm extends React.Component {
 
     }
 
-    let token;
     try {
         const payload = await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
@@ -213,10 +200,39 @@ class CheckoutForm extends React.Component {
         </div>
       </div>
     ) : (
-      <form className="Form" onSubmit={this.handleSubmit}>
+      <div style={{ width: '100%'}}>
+                <div style={{width: '90%', margin: '40px auto', backgroundColor: 'white', padding: '40px'}}>
+                    <div>
+                        <div style={{ textAlign: 'center'}}>
+                            <Typography style={{color: 'black', letterSpacing: '1px', fontWeight: 'bolder', fontSize: '17px'}}>SHOPPING CART</Typography>
+                            <LineOutlined style={{fontSize: '30px', color: '#30383d'}} />
+                            <br/>
+                            <br/>
+                        </div>
+                        {cartItems.length > 0 ? <React.Fragment>
+                        <div style={{ display: 'flex', width: '90%', margin: '0 auto' }}>
+                            <div style={{ width: '-webkit-fit-content', fontFamily: 'Playfair Display', margin: '0 auto' }}>
+                                    <Typography style={{ fontSize: '23px', letterSpacing: '1px', marginBottom: '10px'}}>
+                                        Your Items
+                                    </Typography>
+                                    <div style={{ borderBottom: 'lightgrey 1px solid', fontSize: '16px'}}>
+                                        {cartItems.map(item => (
+                                            <div key={item._id} style={{ borderTop: 'lightgrey 1px solid', padding: '15px'}}>
+                                                <Typography style={{ display: 'inline-block' }}>
+                                                    {item.name} x {item.quantity} - ${item.quantity * item.sale_price} 
+                                                </Typography>
+                                                <Button onClick={() => this.deleteItemFromCart(item._id)} style={{ border: 'none',  marginLeft: '15px' }}>
+                                                    <CloseCircleOutlined />
+                                                </Button> 
+                                            </div>
+                                        ))}
+                                    </div>
+                                <Typography style={{ fontWeight: 'bolder', margin: '15px 0', fontSize: '18px'}}>Total Amount: {calculatePrice(cartItems)}</Typography>
+                            </div>
+      <form className="Form" onSubmit={this.handleSubmit} style={{ width: '50%', margin: '0 auto'}}>
         <fieldset className="FormGroup">
           <Field
-            label="Name"
+            label="NAME"
             id="name"
             type="text"
             placeholder="Jane Doe"
@@ -228,7 +244,7 @@ class CheckoutForm extends React.Component {
             }}
           />
           <Field
-            label="Address"
+            label="ADDRESS"
             id="line1"
             type="text"
             placeholder="123 Main Street"
@@ -240,7 +256,7 @@ class CheckoutForm extends React.Component {
             }}
           />
           <Field
-            label="City"
+            label="CITY"
             id="city"
             type="text"
             placeholder="New York City"
@@ -252,7 +268,7 @@ class CheckoutForm extends React.Component {
             }}
           />
           <Field
-            label="State"
+            label="STATE"
             id="state"
             type="text"
             placeholder="New York"
@@ -264,7 +280,7 @@ class CheckoutForm extends React.Component {
             }}
           />
           <Field
-            label="Postal Code"
+            label="POSTAL CODE"
             id="postalCode"
             type="text"
             placeholder="10013"
@@ -276,10 +292,10 @@ class CheckoutForm extends React.Component {
             }}
           />
           <Field
-            label="Country"
+            label="COUNTRY"
             id="country"
             type="text"
-            placeholder="United States"
+            placeholder="US"
             required
             autoComplete="country"
             value={country}
@@ -288,7 +304,7 @@ class CheckoutForm extends React.Component {
             }}
           />
           <Field
-            label="Email"
+            label="EMAIL"
             id="email"
             type="email"
             placeholder="janedoe@gmail.com"
@@ -300,7 +316,7 @@ class CheckoutForm extends React.Component {
             }}
           />
           <Field
-            label="Phone"
+            label="PHONE"
             id="phone"
             type="tel"
             placeholder="(941) 555-0123"
@@ -321,9 +337,21 @@ class CheckoutForm extends React.Component {
         </fieldset>
         {error && <ErrorMessage>{error.message}</ErrorMessage>}
         <SubmitButton processing={processing} error={error} disabled={!this.props.stripe}>
-          Pay $25
+          PAY <LockOutlined style={{marginLeft: '30px'}}/>
         </SubmitButton>
       </form>
+      </div>
+            
+                    
+                    </React.Fragment> : (
+                        <div>
+                            <Typography>Your Cart is Empty</Typography>
+                            <Typography>Add some jewelery!</Typography>
+                        </div>
+                    )}
+                </div>
+            </div>
+            </div>
     )
   }
 };
@@ -338,16 +366,18 @@ const ELEMENTS_OPTIONS = {
 
 export default function InjectedCheckoutForm() {
   const [clientSecret, setClientSecret] = useState('');
+  const amount_cents = calculateAmount(getCart()) * 100;
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    window
+    if(getCart().length > 0) {
+      window
       .fetch("/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
+        body: JSON.stringify({amount: amount_cents})
       })
       .then(res => {
         return res.json();
@@ -356,6 +386,8 @@ export default function InjectedCheckoutForm() {
         console.log(data.clientSecret)
         setClientSecret(data.clientSecret);
       });
+    }
+    
   }, []);
 
   return (
