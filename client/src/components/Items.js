@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { Layout, Spin, Typography, Row, Col } from 'antd';
 import { Card } from 'antd';
 import { LineOutlined } from '@ant-design/icons';
@@ -21,14 +21,23 @@ class App extends Component {
     searchTerm:'',
     loadingItems: true,
     category: '',
-    subCategory: ''
+    subCategory: '',
+    error: false
   };
   async componentDidMount() {
     try{
+      const pathName = this.props.location.pathname;
+      const categoriesArray = pathName.split("/");
+      const categoriesArrayNew = categoriesArray[1].split("-");
+      const category = categoriesArrayNew[0].replace("_", " ");
+      const subCategory = categoriesArrayNew[1];
+
       const response = await strapi.request('POST', '/graphql', {
         data: {
           query:  `query {
-            items {
+            items(where: {
+              subcategory_contains: ${subCategory}
+            }) {
               _id
               name
               category
@@ -44,20 +53,27 @@ class App extends Component {
           }`
         }
       });
-      console.log("response: " + response);
-      const pathName = this.props.location.pathname;
-      const categoriesArray = pathName.split("/");
-      const categoriesArrayNew = categoriesArray[1].split("-");
-      const category = categoriesArrayNew[0].replace("_", " ");
-      const subCategory = categoriesArrayNew[1];
-      console.log(category);
-      console.log(subCategory);
-
-      console.log(apiUrl + response.data.items[0].image[0].url)
+      console.log(`query {
+        items(where: {
+          subcategory_contains: "${subCategory}"
+        }) {
+          _id
+          name
+          category
+          subcategory
+          description
+          image {
+            url
+          }
+          sale_price
+          regular_price
+          clearance
+        }
+      }`);
+      console.log(response);
       this.setState({ items: response.data.items, loadingItems: false, category: category, subCategory: subCategory });
     } catch (err){
-      console.log(err);
-      this.setState({ loadingItems: false });
+      this.setState({ loadingItems: false, error: true });
     }
   }
 
@@ -83,7 +99,10 @@ class App extends Component {
   };
 
   render() {
-    const { loadingItems, searchTerm, category, subCategory } = this.state;
+    const { loadingItems, searchTerm, category, error, subCategory } = this.state;
+    if (error === true) {
+      return <Redirect to='/404' />
+    }
     return (
       <Layout style={{backgroundColor: 'white', marginTop: '0'}}>
         <div style={{width: '100%', marginTop: '0'}}>
@@ -112,7 +131,6 @@ class App extends Component {
         <div style={{display: "flex", width: '100%', backgroundColor: '#f1f2f5', paddingTop: '20px', paddingLeft: '20px', paddingRight: '20px'}}
         className="centerItems">
           {this.filteredItems(this.state).map(item => (
-
             (item.subcategory === subCategory) && 
             <div key={item._id} style={{ margin: 5, width: '100%', maxWidth: '245px' }}>
               <Link to={`/${item._id}`}>

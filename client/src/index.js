@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import Navbar from './components/Navbar';
 import Items from './components/Items'
 import './style/Navbar.css';
@@ -10,6 +11,7 @@ import { Layout } from 'antd';
 import Foot from './components/Foot';
 import Item from './components/Item';
 import Checkout from './components/Checkout'
+import Error404 from './components/Error404'
 
 const Root = () =>  (
   <Router>
@@ -18,13 +20,12 @@ const Root = () =>  (
           <Layout>
             <Switch>
                 <Route component={App} exact path="/" />
-                <Route component={Checkout} path="/checkout" />
-                {/* <Route component={Contact} path="/contact" />  */}
-
+                <Route component={Checkout} path="/checkout" />                
+                <Route component={Error404} exact path="/404" />
                 <Route component={Items} path="/:category-:subcategory" />
-
                 <Route component={Item} path="/:itemId" />
-                {/* <Route component={Items} path="/items" /> */}
+
+                {/* <Route path="*" component={NotFoundPage} /> */}
 
             </Switch>
             <Foot />

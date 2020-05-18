@@ -29,17 +29,51 @@
     margin: 5px 0 15px 0;
 }
 
-/* @media(max-width: 1370px){
-    .headingInfo {
-        display: none;
-    }
-    .mobileHeadingInfo {
+.itemName {
+    width: 90%;
+    margin: 40px auto;
+    background-color: white;
+    display: flex;
+}
+
+.carouselDiv {
+    width: 35%;
+    border-right: lightgrey 1px solid;
+}
+
+.itemInfoDiv {
+    width: 62%;
+    margin: 40px 15px 15px 15px;
+    background-color: white;
+}
+
+.itemInfoCenterDiv {
+    margin: 0 auto;
+    width: 60%;
+}
+
+@media(max-width: 860px){
+    .itemName {
+        width: 100%;
+        margin: 0;
+        background-color: white;
         display: block;
     }
-}
-  
-@media(min-width: 1371px){
-    .mobileHeadingInfo {
-        display: none;
+
+    .carouselDiv {
+        width: 50%;
+        border-right: none;
+        margin: 0 auto;
     }
-} */
+
+    .itemInfoDiv {
+        width: 100%;
+        margin: 0;
+        background-color: white;
+    }
+
+    .itemInfoCenterDiv {
+        margin: 0 auto;
+        width: 80%;
+    }
+}

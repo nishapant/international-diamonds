@@ -1,52 +1,225 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-#stripe__button {
-    white-space: nowrap;
-    border: 0;
-    outline: 0;
-    display: inline-block;
-    height: 40px;
-    line-height: 40px;
-    padding: 0 14px;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-    color: #fff;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    background-color: #6772e5;
-    text-decoration: none;
-    transition: all 150ms ease;
-    margin-top: 10px;
-    font-family: 'Roboto';
+  input,
+  button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border-style: none;
   }
   
-  #stripe__button:hover {
-    color: #fff;
-    cursor: pointer;
-    background-color: #7795f8;
-    transform: translateY(-1px);
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+  
+  @keyframes fade {
+    from {
+      opacity: 0;
+      transform: scale3D(0.95, 0.95, 0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale3D(1, 1, 1);
+    }
+  }
+  
+  .Form {
+    animation: fade 200ms ease-out;
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .FormGroup {
+    margin: 0 15px 20px;
+    padding: 0;
+    border-style: none;
+    background-color:white;
+    will-change: opacity, transform;
+    border: 1px solid grey;
+
+  }
+  
+  .FormRow {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-left: 15px;
+  }
+  
+  .FormRow:first-child {
+    border-top: none;
+  }
+  
+  .FormRowLabel {
+    width: 15%;
+    font-size: 11px;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    min-width: 100px;
+    padding: 11px 0;
+    color: black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  @keyframes void-animation-out {
+    0%,
+    to {
+      opacity: 1;
+    }
+  }
+  .FormRowInput:-webkit-autofill {
+    -webkit-text-fill-color: black;
+    /* Hack to hide the default webkit autofill */
+    transition: background-color 100000000s;
+    animation: 1ms void-animation-out;
+  }
+  
+  .FormRowInput {
+    font-size: 16px;
+    width: 100%;
+    padding: 11px 15px 11px 0;
+    color: grey;
+    background-color: transparent;
+    animation: 1ms void-animation-out;
+  }
+  
+  .FormRowInput::placeholder {
+    color: lightgrey;
+  }
+  
+  .StripeElement--webkit-autofill {
+    background: transparent !important;
   }
   
   .StripeElement {
-    display: block;
-    margin: 10px 0 20px 0;
-    max-width: 500px;
-    padding: 10px 14px;
-    font-size: 1em;
-    font-family: monospace;
-    box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
-      rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-    border: 0;
-    outline: 0;
-    border-radius: 4px;
-    background: white;
+    width: 100%;
+    padding: 11px 15px 11px 0;
   }
   
-  .StripeElement--focus {
-    box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
-      rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
-    transition: all 150ms ease;
+  .SubmitButton {
+    display: block;
+    letter-spacing: 1px;
+    font-size: 15px;
+    width: calc(100% - 30px);
+    height: 40px;
+    margin: 40px 15px 0;
+    background-color: #000000;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+    will-change: transform, background-color, box-shadow;
+    border: 1px solid black;
   }
+
+  .SubmitButton:hover {
+    background-color: white;
+    color: black;
+  }
+  
+  .SubmitButton:active {
+    background-color: #000000;
+    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 #000000;
+    transform: scale(0.99);
+  }
+  
+  .SubmitButton.SubmitButton--error {
+    transform: translateY(15px);
+  }
+  .SubmitButton.SubmitButton--error:active {
+    transform: scale(0.99) translateY(15px);
+  }
+  
+  .SubmitButton:disabled {
+    opacity: 0.5;
+    cursor: default;
+    background-color: black;
+    box-shadow: none;
+  }
+  
+  .ErrorMessage {
+    color: black;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    padding: 0 15px;
+    font-size: 13px;
+    margin-top: 0px;
+    width: 100%;
+    transform: translateY(-15px);
+    opacity: 0;
+    animation: fade 150ms ease-out;
+    animation-delay: 50ms;
+    animation-fill-mode: forwards;
+    will-change: opacity, transform;
+  }
+  
+  .ErrorMessage svg {
+    margin-right: 10px;
+  }
+  
+  .Result {
+    margin-top: 50px;
+    text-align: center;
+    animation: fade 200ms ease-out;
+  }
+  
+  .ResultTitle {
+    color: black;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 17px;
+    text-align: center;
+  }
+  
+  .ResultMessage {
+    color: black;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    line-height: 1.6em;
+    text-align: center;
+  }
+  
+  .ResetButton {
+    border: 0;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .container-payments {
+    display: flex; 
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .whiteBackground {
+    width: 90%;
+    margin: 40px auto;
+    background-color: white;
+    padding: 40px;
+  }
+
+  @media(max-width: 1040px){
+    .container-payments {
+      display: block; 
+    }
+
+    .Form {
+      width:90%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .FormGroup {
+      margin: 0 10px 5px;
+    }
+    
+    .whiteBackground {
+      width: 100%;
+      margin: 10px auto;
+      padding: 40px 0;
+    }
+  }
+  

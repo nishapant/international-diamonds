@@ -6,6 +6,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { LineOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import '../style/Item.css';
 import Strapi from 'strapi-sdk-javascript/build/main';
+import { Redirect } from 'react-router-dom';
+
 
 const apiUrl = process.env.API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
@@ -18,7 +20,9 @@ class Item extends Component {
     state = { 
         item: '',
         cartItems: [],
-        images: []
+        images: [], 
+        size: 'N/A',
+        error: false
     }
 
     async componentDidMount() {
@@ -51,7 +55,9 @@ class Item extends Component {
             })
         }
         catch (err) {
-            console.log(err);
+            this.setState({
+                error: true
+            })
         }
     }
 
@@ -79,11 +85,14 @@ class Item extends Component {
     }
 
     render() {
-        const { item, cartItems, images } = this.state;
+        const { item, images, error } = this.state;
+        if (error === true) {
+            return <Redirect to='/404' />
+        }
         return (
             <div style={{ width: '100%'}}>
-                <div style={{width: '90%', margin: '40px auto', backgroundColor: 'white', display: 'flex'}}>
-                    <div style={{width: '35%', borderRight: 'lightgrey 1px solid'}}>
+                <div className="itemName">
+                    <div className="carouselDiv">
                         <Carousel autoplay showThumbs={false}>
                             {images.map(picture=>(
                                 <div key={picture.url} style={{ backgroundColor: 'white'}}>
@@ -92,8 +101,8 @@ class Item extends Component {
                             ))}     
                         </Carousel>
                     </div>
-                    <div style={{width: '62%', margin: '40px 15px 15px 15px', backgroundColor: 'white'}}>
-                        <div key={item._id} style={{margin: '0 auto', width: '60%'}}>
+                    <div className="itemInfoDiv">
+                        <div key={item._id} className="itemInfoCenterDiv">
                                 <Typography className="title">{item.name}</Typography>
                                 <LineOutlined style={{fontSize: '30px', color: '#30383d'}} />
                                 { item.clearance && 
@@ -150,27 +159,7 @@ class Item extends Component {
                         </div>
                     </div> 
 
-                </div>
-                {/* <div style={{ display: "block", float: 'left'}}>
-                    <Typography>Your Cart</Typography>
-                    <Typography>{cartItems.length} items selected</Typography>
-                    {cartItems.map(item => (
-                        <div>
-                            <Typography>
-                                {item.name} x {item.quantity} - ${(item.sale_price*item.quantity).toFixed(2)}
-                            </Typography>
-                            <Button onClick={() => this.deleteItemFromCart(item._id)}>delete from cart</Button> 
-                            
-                        </div>       
-                    ))}
-                        <div>
-                            {cartItems.length === 0 && (
-                                    <Typography color="red">Please select some items </Typography>
-                                )}
-                        </div>
-                        <Typography>Total: {calculatePrice(cartItems)} </Typography>
-                        <Link to="/checkout">Checkout</Link>
-                </div> */}          
+                </div>       
             </div>
         )}
 }
