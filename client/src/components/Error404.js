@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Result, Button } from 'antd';
+import { Result } from 'antd';
 
 class Error404 extends Component {
   render() {

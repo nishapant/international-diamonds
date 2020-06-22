@@ -1,8 +1,9 @@
 import '../style/App.css';
 import React, { Component } from 'react';
-import { Layout } from 'antd';
+import { Layout, Typography } from 'antd';
 import { InstagramFilled, FacebookFilled, MailFilled, PhoneFilled } from '@ant-design/icons';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Link } from 'react-router-dom';
 const { Footer } = Layout;
 
 
@@ -24,10 +25,28 @@ class Foot extends Component {
                 Schaumburg, IL 60173</Col>
             </Row>
             <Row className="bottom-row-footer">
-                <Col xs={24} md={3} lg={3}>col-6</Col>
-                <Col xs={24} md={3} lg={3}>col-6</Col>
-                <Col xs={24} md={3} lg={3}>col-6</Col>
-                <Col xs={24} md={3} lg={3}>About Us</Col>
+                <Col xs={24} md={3} lg={3}><span class="footerLinks">
+                    <Link to="/about">About Us</Link></span>
+                </Col>
+                <Col xs={24} md={3} lg={3}><span class="footerLinks">
+                    <a href="http://online.anyflip.com/fblh/yclz/mobile/index.html">Catalog</a></span>
+                    </Col>
+                <Col xs={24} md={3} lg={3}>
+                    <span class="footerLinks"><Link to="/delivery">Delivery</Link></span>
+                    <br />
+                    <Typography>
+                    All orders that are shipped are insured. Delivery usually takes 3-5 business days after shipment but due to safety measures because 
+                    of COVID-19, shipments will be delayed. 
+                    </Typography>
+                </Col>
+                <Col xs={24} md={3} lg={3}><span class="footerLinks">
+                    <Link to="/customization">Customization</Link></span>
+                    <br />
+                    <Typography>
+                    We also do custom and special orders. If you have a specific design or style in mind, or even have a picture of an item that we may not
+                     carry, we can design and create jewelry for you. In order to customize, please message our facebook, or email us at internationaldiamondco@gmail.com. 
+                    </Typography>
+                </Col>
             </Row>
             <Row className="bottom-row-footer">
                 <Col xs={24} md={24} lg={24} style={{ textAlign:'center', margin: '50px auto 10px auto'}}>© International Diamond Company. All rights reserved.</Col>

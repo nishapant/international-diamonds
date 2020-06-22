@@ -12,6 +12,9 @@ import Foot from './components/Foot';
 import Item from './components/Item';
 import Checkout from './components/Checkout'
 import Error404 from './components/Error404'
+import About from './components/About'
+
+
 
 const Root = () =>  (
   <Router>
@@ -20,7 +23,8 @@ const Root = () =>  (
           <Layout>
             <Switch>
                 <Route component={App} exact path="/" />
-                <Route component={Checkout} path="/checkout" />                
+                <Route component={Checkout} path="/checkout" />  
+                <Route component={About} path="/about" />  
                 <Route component={Error404} exact path="/404" />
                 <Route component={Items} path="/:category-:subcategory" />
                 <Route component={Item} path="/:itemId" />

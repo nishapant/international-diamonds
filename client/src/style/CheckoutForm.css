@@ -204,6 +204,7 @@
   @media(max-width: 1040px){
     .container-payments {
       display: block; 
+      margin-top: -15px;
     }
 
     .Form {
@@ -219,7 +220,7 @@
     .whiteBackground {
       width: 100%;
       margin: 10px auto;
-      padding: 40px 0;
+      padding: 20px 0;
     }
   }
   
